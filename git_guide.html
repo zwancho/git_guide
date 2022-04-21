@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="file:///C:/Users/admin/Documents/" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8" />
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="file:///C:\Users\admin\AppData\Local\Markdown Monster\PreviewThemes\Dharkan\..\scripts\fontawesome\css\font-awesome.min.css" rel="stylesheet" />
+
+    <link href="file:///C:\Users\admin\AppData\Local\Markdown Monster\PreviewThemes\Dharkan\Theme.css" rel="stylesheet" />
+
+    <script src="file:///C:\Users\admin\AppData\Local\Markdown Monster\PreviewThemes\Dharkan\..\scripts\jquery.min.js"></script>
+    <link href="file:///C:\Users\admin\AppData\Local\Markdown Monster\PreviewThemes\Dharkan\..\scripts\highlightjs\styles\twilight.css" rel="stylesheet" />
+    <script src="file:///C:\Users\admin\AppData\Local\Markdown Monster\PreviewThemes\Dharkan\..\scripts\highlightjs\highlight.pack.js"></script>
+    <script src="file:///C:\Users\admin\AppData\Local\Markdown Monster\PreviewThemes\Dharkan\..\scripts\preview.js" id="PreviewScript"></script>
+    
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+mermaid.initialize({startOnLoad: true});
+</script>
+
+<script>
+$(function() {
+    function renderMermaid() {
+        mermaid.init(undefined,'.mermaid');    
+    }  
+    $(document).on('previewUpdated', function() {
+        renderMermaid();
+    });
+});
+</script>
+
+</head>
+<body>
+<div id="MainContent">
+    <!-- Markdown Monster Content -->
+    <h1 id="git使用指南"><a id="pragma-line-0"></a>Git使用指南</h1>
+<h2 id="简介"><a id="pragma-line-1"></a>简介</h2>
+<p id="pragma-line-2">在软件工程中，版本控制，又称源码管理，常用的版本控制软件有：</p>
+<ul id="pragma-line-3">
+<li id="pragma-line-3">Apache <strong>S</strong>ub<strong>V</strong>sio<strong>N</strong></li>
+<li id="pragma-line-4"><strong>Git</strong> (/ɡɪt/)</li>
+</ul>
+<details><summary>冷知识：VOK/VPK的全称是什么？</summary>
+<p>
+<ul id="pragma-line-9">
+<li id="pragma-line-9"><strong>V</strong>ision <strong>O</strong>riginal <strong>K</strong>it</li>
+<li id="pragma-line-10"><strong>V</strong>ision <strong>P</strong>rofessional <strong>K</strong>it</li>
+</ul>
+</p>
+</details>
+<h2 id="svn-vs-git"><a id="pragma-line-15"></a>SVN vs Git</h2>
+<table id="pragma-line-16">
+<thead>
+<tr id="pragma-line-16">
+<th id="pragma-line-16">Git</th>
+<th style="text-align: center;" id="pragma-line-16">SVN</th>
+</tr>
+</thead>
+<tbody>
+<tr id="pragma-line-18">
+<td id="pragma-line-18">Git是分布式的</td>
+<td style="text-align: center;" id="pragma-line-18">SVN是集中式的</td>
+</tr>
+<tr id="pragma-line-19">
+<td id="pragma-line-19">它通过本地库管理代码，而不是集中式的服务器</td>
+<td style="text-align: center;" id="pragma-line-19">通过集中式服务器来存储代码</td>
+</tr>
+<tr id="pragma-line-20">
+<td id="pragma-line-20">在Git提交代码无须网络</td>
+<td style="text-align: center;" id="pragma-line-20">几乎SVN所有操作都需要网络</td>
+</tr>
+<tr id="pragma-line-21">
+<td id="pragma-line-21">灵活</td>
+<td style="text-align: center;" id="pragma-line-21">？？？</td>
+</tr>
+</tbody>
+</table>
+<h3 id="svn部署图"><a id="pragma-line-23"></a>SVN部署图</h3>
+<div class="mermaid"> 
+flowchart TD
+    server[SVN Repo] &lt;--&gt; local_a[Devloper]
+    server &lt;--&gt; local_b[Devloper]
+    server &lt;--&gt; local_c[Devloper]
+</div>
+<h3 id="git部署图"><a id="pragma-line-31"></a>Git部署图</h3>
+<div class="mermaid"> 
+flowchart TD
+    server[Git Repo] &lt;--&gt; local_a[Git Repo]
+    local_a --- working_a[Working Directory]
+    server &lt;--&gt; local_c[Git Repo]
+    local_c --- working_c[Working Directory]
+    local_b &lt;--&gt; local_c
+    server &lt;--&gt; local_b[Git Repo]
+    local_b --- working_b[Working Directory]
+</div>
+<h2 id="常用的git操作"><a id="pragma-line-44"></a>常用的Git操作</h2>
+<h3 id="clone克隆"><a id="pragma-line-46"></a>clone，克隆</h3>
+<pre><code id="pragma-line-47" class="language-bash">git clone http://gitaudit.bmtek.com/ivi/vpk/edge_node/vpk_document.git
+git clone /usr/projects/my_repo.git
+</code></pre>
+<div class="mermaid"> 
+flowchart TD
+    server[Git Repo] -- clone --&gt; local[Git Repo]
+    local -- checkout --&gt; working[Working Directory]
+</div>
+<h3 id="status查看未提交的变更状态"><a id="pragma-line-58"></a>status，查看未提交的变更状态</h3>
+<pre><code id="pragma-line-59" class="language-bash">git status
+</code></pre>
+<h3 id="add暂存文件准备提交"><a id="pragma-line-63"></a>add，暂存文件准备提交</h3>
+<pre><code id="pragma-line-64" class="language-bash">git add *
+git add README.md src/main.cpp
+</code></pre>
+<div class="mermaid"> 
+flowchart TD
+    server[Git Repo] -- clone --&gt; local[Git Repo]
+    local -- checkout --&gt; working[Working Directory]
+    working -- add --&gt; index[Index]
+</div>
+<h3 id="commit提交代码"><a id="pragma-line-76"></a>commit，提交代码</h3>
+<pre><code id="pragma-line-77" class="language-bash">git commit --message 'Add README.md and main.cpp'
+</code></pre>
+<div class="mermaid"> 
+flowchart TD
+    server[Git Repo] -- clone --&gt; local[Git Repo]
+    local -- checkout --&gt; working[Working Directory]
+    working -- add --&gt; index[Index]
+    index -- commit --&gt; local
+</div>
+<h3 id="push推送变更记录到指定的远程库默认以orgin为远程库"><a id="pragma-line-89"></a>push，推送变更记录到指定的远程库，默认以orgin为远程库</h3>
+<pre><code id="pragma-line-90" class="language-bash">git push [--set-upstream origin]
+</code></pre>
+<div class="mermaid"> 
+flowchart TD
+    server[Git Repo] -- clone --&gt; local[Git Repo]
+    local -- checkout --&gt; working[Working Directory]
+    working -- add --&gt; index[Index]
+    index -- commit --&gt; local
+    local -- push --&gt;server
+</div>
+<h3 id="fetch更新远程库最新的代码到本地库中的缓存"><a id="pragma-line-103"></a>fetch，更新远程库最新的代码到本地库中（的缓存）</h3>
+<pre><code id="pragma-line-104" class="language-bash">git fetch orgin
+git fetch upstream
+git fetch upstream main
+</code></pre>
+<div class="mermaid"> 
+flowchart TD
+    server[Git Repo] -- clone --&gt; local[Git Repo]
+    local -- checkout --&gt; working[Working Directory]
+    working -- add --&gt; index[Index/Stage]
+    index -- commit --&gt; local
+    local -- push --&gt;server
+    upstream[Git Repo] -- clone --&gt; server
+    upstream -- fetch --&gt; local
+</div>
+<h3 id="merge将远程分支的缓存与本地文件合并并且提交到本地库"><a id="pragma-line-121"></a>merge，将远程分支（的缓存）与本地文件合并，并且提交到本地库</h3>
+<pre><code id="pragma-line-122" class="language-bash">git merge upstream/main
+</code></pre>
+<div class="mermaid"> 
+flowchart TD
+    up[Git Repo: upstream/main] -- merge --&gt; working
+    working[Working Directory] -- commit --&gt; local[Git Repo: main]
+</div>
+<h3 id="reset重置到指定节点"><a id="pragma-line-132"></a>reset，重置到指定节点</h3>
+<pre><code id="pragma-line-133" class="language-bash"># HEAD是游标，它所指向的节点，就是当前工作节点
+git reset --hard [HEAD] # 默认重置到最新的节点，并清除未提交的变更
+git reset --hard [HEAD~2] # 重置到前2个节点
+git reset --soft
+git reset --mixed
+</code></pre>
+<div class="mermaid">
+gitGraph
+    commit
+    commit id: &quot;HEAD&quot; type: HIGHLIGHT
+    commit
+    commit
+</div>
+<h3 id="revert还原最近一次的提交"><a id="pragma-line-148"></a>revert，还原最近一次的提交</h3>
+<pre><code id="pragma-line-149" class="language-bash">git revert
+</code></pre>
+<div class="mermaid">
+gitGraph
+    commit
+    commit
+    commit
+    commit id: &quot;Reverse&quot; type: REVERSE 
+</div>
+<h3 id="checkoutbranch多分支实现多本版并行开发"><a id="pragma-line-161"></a>checkout/branch，多分支实现多本版并行开发</h3>
+<pre><code id="pragma-line-162" class="language-bash">git checkout main
+git checkout dev
+</code></pre>
+<div class="mermaid">
+gitGraph
+    commit
+    commit tag: &quot;3.5.0&quot;
+    branch dev
+    checkout dev
+    commit id: &quot;新功能1&quot;
+    checkout main
+    commit id: &quot;修复bug&quot;
+    checkout dev
+    merge main
+    commit id: &quot;新功能2&quot; tag: &quot;3.5.1&quot;
+    checkout main
+    merge dev
+    commit id: &quot;修复bug2&quot;
+    checkout dev
+    merge main
+    commit id: &quot;新功能3&quot;
+</div>
+
+    <!-- End Markdown Monster Content -->
+</div>
+</body>
+</html>
