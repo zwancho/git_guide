@@ -13,39 +13,44 @@
 </p>
 </details>
 
+
 ## SVN vs Git
-| Git           | SVN           |
-| ------------- |:-------------:|
-| Git是分布式的 | SVN是集中式的 |
-| 它通过本地库管理代码，而不是集中式的服务器      | 通过集中式服务器来存储代码      | 
-| 在Git提交代码无须网络 | 几乎SVN所有操作都需要网络 | 
-| 灵活 | ？？？ |  
+|                    Git                     |            SVN             |
+| :----------------------------------------: | :------------------------: |
+|               Git是分布式的                |       SVN是集中式的        |
+| 它通过本地库管理代码，而不是集中式的服务器 | 通过集中式服务器来存储代码 |
+|           在Git提交代码无须网络            | 几乎SVN所有操作都需要网络  |
+|                    灵活                    |           ？？？           |
 
 ### SVN部署图
-```mermaid 
-flowchart TD
-    server[SVN Repo] <--> local_a[Devlepor]
-    server <--> local_b[Devlepor]
-    server <--> local_c[Devlepor]
-```
+<style>
+.center {
+    display: flex;
+    justify-content: center;
+}
+</style>
+<div class="center">
+    <div class="mermaid">
+        flowchart TD
+            server[SVN Repo] <--> local_a[Devlepor]
+            server <--> local_b[Devlepor]
+            server <--> local_c[Devlepor]
+    </div>
+</div>
 
 ### Git部署图
-```mermaid 
-flowchart TD
-    server[Git Repo] <--> local_a[Git Repo]
-    server <--> local_c[Git Repo]
-    subgraph dev_c[Devlepor]
-    local_c --- working_c[Working Directory]
-    end
-    local_b <--> local_c
-    server <--> local_b[Git Repo]
-    subgraph dev_b[Devlepor]
-    local_b --- working_b[Working Directory]
-    end
-    subgraph dev_a[Devlepor]
-    local_a --- working_a[Working Directory]
-    end
-```
+<div class="center">
+    <div class="mermaid">
+        flowchart TD
+            server[Git Repo] <--> local_a[Git Repo1]
+            server <--> local_c[Git Repo3]
+            server <--> local_b[Git Repo2]
+            local_b <--> local_c
+            local_a --- working_a[Working Directory]
+            local_b --- working_b[Working Directory]
+            local_c --- working_c[Working Directory]
+    </div>
+</div>
 
 
 ## 常用的Git操作
@@ -97,25 +102,31 @@ git reset --hard [HEAD~2] # 重置到前2个节点
 git reset --soft
 git reset --mixed
 ```
-```mermaid
-gitGraph
+
+<div class="center">
+    <div class="mermaid">
+        gitGraph
+            commit
+            commit id: "HEAD" type: HIGHLIGHT
+            commit
     commit
-    commit id: "HEAD" type: HIGHLIGHT
-    commit
-    commit
-```
+    </div>
+</div>
 
 ### revert，还原最近一次的提交
 ```bash
 git revert
 ```
-```mermaid
-gitGraph
-    commit
-    commit
-    commit
-    commit id: "Reverse" type: REVERSE 
-```
+
+<div class="center">
+    <div class="mermaid">
+        gitGraph
+            commit
+            commit
+            commit
+            commit id: "Reverse" type: REVERSE 
+    </div>
+</div>
 
 
 ### checkout/branch，多分支实现多本版并行开发
@@ -123,23 +134,25 @@ gitGraph
 git checkout main
 git checkout dev
 ```
-```mermaid
-gitGraph
-    commit
-    commit tag: "3.5.0"
-    branch dev
-    checkout dev
-    commit id: "新功能1"
-    checkout main
-    commit id: "修复bug"
-    checkout dev
-    merge main
-    commit id: "新功能2" tag: "3.5.1"
-    checkout main
-    merge dev
-    commit id: "修复bug2"
-    checkout dev
-    merge main
-    commit id: "新功能3"
-```
 
+<div class="center">
+    <div class="mermaid">
+        gitGraph
+            commit
+            commit tag: "3.5.0"
+            branch dev
+            checkout dev
+            commit id: "新功能1"
+            checkout main
+            commit id: "修复bug"
+            checkout dev
+            merge main
+            commit id: "新功能2" tag: "3.5.1"
+            checkout main
+            merge dev
+            commit id: "修复bug2"
+            checkout dev
+            merge main
+            commit id: "新功能3"
+    </div>
+</div>
